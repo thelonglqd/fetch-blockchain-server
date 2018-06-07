@@ -12,10 +12,12 @@ router.post('/', function(req, res, next) {
       return res.send(err);
     } else {
       data = JSON.parse(data.toString());
-      console.log(data.filter(user => user.username === username && user.password === password))
       if (data.filter(user => user.username === username && user.password === password).length === 1) {
         res.status(200);
         res.send(data.filter(user => user.username === username && user.password === password));
+      } else {
+        res.status(400);
+        res.send({ errorMessage: 'Authentication failed' });
       }
     }
     
